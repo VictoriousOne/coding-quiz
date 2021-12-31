@@ -2,11 +2,14 @@ var pRemove = $("#pRem");
 var startBtn = $("#start");
 var answersDiv = $("#answers");
 var question = $("#card-header");
+var timeLeft = $("#myTime");
 var answerBtn1;
 var answerBtn2;
 var answerBtn3;
 var answerBtn4;
 var tempBtn;
+var startTimer;
+let secs = 75;
 
 var firstLoad = 1;
 var ndx = 0;
@@ -50,6 +53,10 @@ var quiz = [
     }
 ];
 
+function displayScore() {
+    console.log("You got " + score + " correct")
+}
+
 function loadQuestion(event) {
 
   
@@ -59,18 +66,14 @@ function loadQuestion(event) {
             score++;
             console.log("score is " + score);
         }
+        else if ((event.target.getAttribute("data-answer")) == 0) {
+            secs = secs - 10;
+        }
     }
 
-    
-
-    
     console.log((event));
     if (ndx <= (quiz.length - 1)) {
-        /*answer1.attr("data-answer", quiz[ndx].ans1[1]);
-        answer2.attr("data-answer", quiz[ndx].ans2[1]);
-        answer3.attr("data-answer", quiz[ndx].ans3[1]);
-        answer4.attr("data-answer", quiz[ndx].ans4[1]);*/
-
+        
         question.text(quiz[ndx].question);
 
         answerBtn1.html(quiz[ndx].ans1[0]).attr("data-answer", quiz[ndx].ans1[1]);
@@ -80,6 +83,24 @@ function loadQuestion(event) {
 
         ndx++;
     }
+
+    if ((ndx == quiz.length) || (secs <= 0)) {
+        clearInterval(startTimer);
+        displayScore();
+    }
+}
+
+function countDown() {
+    timeLeft.html("Time: " + secs.toString());
+
+    if (secs <= 0) {
+        clearInterval(startTimer);
+    }
+    secs--;
+
+    
+    console.log(secounds);
+    console.log(timeLeft);
 }
 
 function questionPrep() {
@@ -112,7 +133,7 @@ function questionPrep() {
     answerBtn4.on("click", loadQuestion);
    
     loadQuestion(firstLoad);
-  
+    startTimer = setInterval(countDown, 1000);
     
 }
 tempBtn = startBtn.clone();
