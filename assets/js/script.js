@@ -3,6 +3,8 @@ var startBtn = $("#start");
 var answersDiv = $("#answers");
 var question = $("#card-header");
 var timeLeft = $("#myTime");
+var card = $("#card");
+var scoreDiv;
 var answerBtn1;
 var answerBtn2;
 var answerBtn3;
@@ -15,6 +17,9 @@ var firstLoad = 1;
 var ndx = 0;
 var score = 0;
 
+var userScores = [];
+    
+var savedScores = [];
 var quiz = [
     {
         "question": "What is the first index of an array?",
@@ -53,8 +58,79 @@ var quiz = [
     }
 ];
 
+function highScore() {
+
+    var userScore = {
+        initials: "",
+        score: ""
+    };
+
+
+    var highBtnDiv;
+    question.text("High Scores");
+    userScore.initials = $("#scoreInput").val();
+    userScore.score = score;
+    console.log("User Score: " + userScore.initials + "-" + userScore.score);
+    userScores.push(userScore);
+    localStorage.setItem('scores', JSON.stringify(userScores));
+
+    $("#scoreLable").remove();
+    $("#initials").remove();
+    $("#scoreInput").remove();
+    $("#submitScore").remove();
+
+    savedScores = JSON.parse(localStorage.getItem("scores"));
+
+    olDiv = $("<div>").attr('id', 'olDiv').attr('class', 'd-flex flex-column');
+
+    scoreList = $("<ol>").attr('id', 'highScores');
+
+    for (var i = 0; i < savedScores.length; i++){
+
+    scoreList.append($("<li>").attr('id', 'listScore').text(savedScores[i].initials + "-" + savedScores[i].score));
+    }
+
+    scoreDiv.removeAttr('class').attr('class', 'd-flex flex-column');
+    olDiv.append(scoreList);
+    scoreDiv.append(olDiv);
+
+    highBtnDiv = $("<div>").attr('class', 'row').attr('id', 'hBtnDiv');
+    highBtnDiv.append($("<button>").attr('id', 'goBack').attr('class', 'btn btn-info').text("Go Back"));
+    highBtnDiv.append($("<button>").attr('id', 'clearScores').attr('class', 'btn btn-info').text("Clear High Scores"));
+
+    scoreDiv.append(highBtnDiv);
+
+
+}
+
 function displayScore() {
-    console.log("You got " + score + " correct")
+    console.log("You got " + score + " correct");
+
+    question.text("All Done!");
+    $("#answers").remove();
+    answerBtn1.remove();
+    answerBtn2.remove();
+    answerBtn3.remove();
+    answerBtn4.remove();
+
+    if (!(score == 0)) {
+        score = (score/quiz.length) * 100;
+    }
+    var yourScore = $("<h6>").attr('id', 'scoreLable'); 
+    yourScore.text("Your score is " + score);
+    card.append(yourScore);
+
+    scoreDiv = $("<div>").attr('id', 'scoreDiv').attr('class', 'd-flex justify-content-between mb-3');
+    scoreDiv.append($("<lable>").attr('class', 'form-label mb-3').attr('id', 'initials').text("Enter your initials:"));
+    scoreDiv.append($("<input>").attr('id', 'scoreInput').attr('class', 'form-control mb-3').attr('type', 'text'));
+    scoreDiv.append($("<button>").attr('class', 'btn btn-info').attr('id', 'submitScore').text("submit"));
+    card.append(scoreDiv);
+
+    $("#submitScore").on("click", highScore);
+
+
+
+
 }
 
 function loadQuestion(event) {
@@ -84,7 +160,7 @@ function loadQuestion(event) {
         ndx++;
     }
 
-    if ((ndx == quiz.length) || (secs <= 0)) {
+    else if ((ndx == quiz.length) || (secs <= 0)) {
         clearInterval(startTimer);
         displayScore();
     }
@@ -98,9 +174,8 @@ function countDown() {
     }
     secs--;
 
-    
-    console.log(secounds);
-    console.log(timeLeft);
+    /*console.log(secs);
+    console.log(timeLeft);*/
 }
 
 function questionPrep() {
