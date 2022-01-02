@@ -19,7 +19,7 @@ var score = 0;
 
 var userScores = [];
     
-var savedScores = [];
+var savedScores;
 var quiz = [
     {
         "question": "What is the first index of an array?",
@@ -58,6 +58,15 @@ var quiz = [
     }
 ];
 
+function homeJames() {
+
+    /*
+    $("<a>").attr('href', 'index.html').attr('id', '#home');
+    $("#home").click();*/
+
+    location.reload();
+}
+
 function highScore() {
 
     var userScore = {
@@ -72,35 +81,46 @@ function highScore() {
     userScore.score = score;
     console.log("User Score: " + userScore.initials + "-" + userScore.score);
     userScores.push(userScore);
-    localStorage.setItem('scores', JSON.stringify(userScores));
+
+    savedScores = JSON.parse(localStorage.getItem("scores"));
+    savedScores.push(userScore);
+
+    localStorage.setItem('scores', JSON.stringify(savedScores));
 
     $("#scoreLable").remove();
     $("#initials").remove();
     $("#scoreInput").remove();
     $("#submitScore").remove();
 
-    savedScores = JSON.parse(localStorage.getItem("scores"));
+    /*savedScores = JSON.parse(localStorage.getItem("scores"));*/
 
-    olDiv = $("<div>").attr('id', 'olDiv').attr('class', 'd-flex flex-column');
+    olDiv = $("<div>").attr('id', 'olDiv').attr('class', 'd-flex flex-column justify-content-center');
 
     scoreList = $("<ol>").attr('id', 'highScores');
-
     for (var i = 0; i < savedScores.length; i++){
 
-    scoreList.append($("<li>").attr('id', 'listScore').text(savedScores[i].initials + "-" + savedScores[i].score));
+    scoreList.append($("<li>").attr('id', 'listScore')
+    .text(savedScores[i].initials + "-" + savedScores[i].score));
     }
 
-    scoreDiv.removeAttr('class').attr('class', 'd-flex flex-column');
+    scoreDiv.removeAttr('class').attr('class', 'd-flex flex-column justiy-content-start');
     olDiv.append(scoreList);
     scoreDiv.append(olDiv);
 
     highBtnDiv = $("<div>").attr('class', 'row justify-content-center').attr('id', 'hBtnDiv');
-    highBtnDiv.append($("<button>").attr('id', 'goBack').attr('class', 'btn btn-info').text("Go Back"));
-    highBtnDiv.append($("<button>").attr('id', 'clearScores').attr('class', 'btn btn-info').text("Clear High Scores"));
+    
+    /*highBtnDiv.append($("<a>").attr('href', './index.html')
+    .attr('class', 'btn btn-info btn-sm')
+    .attr('tabindex', '-1').attr('role', 'button')
+    .attr('aria-disabled', 'true').text("Go Back"));*/
+    
+    highBtnDiv.append($("<button>").attr('id', 'goBack').attr('class', 'btn btn-info btn-sm').text("Go Back"));
+    highBtnDiv.append($("<button>").attr('id', 'clearScores').attr('class', 'btn btn-info btn-sm').text("Clear High Scores"));
 
     scoreDiv.append(highBtnDiv);
 
-
+    $('#goBack').on("click", homeJames);
+    $('clearScores').on("click", clearScores);
 }
 
 function displayScore() {
@@ -121,9 +141,9 @@ function displayScore() {
     card.append(yourScore);
 
     scoreDiv = $("<div>").attr('id', 'scoreDiv').attr('class', 'd-flex justify-content-between mb-3');
-    scoreDiv.append($("<lable>").attr('class', 'form-label mb-3').attr('id', 'initials').text("Enter your initials:"));
-    scoreDiv.append($("<input>").attr('id', 'scoreInput').attr('class', 'form-control mb-3').attr('type', 'text'));
-    scoreDiv.append($("<button>").attr('class', 'btn btn-info').attr('id', 'submitScore').text("submit"));
+    scoreDiv.append($("<label>").attr('class', 'form-label mb-3').attr('id', 'initials').attr('for', 'scoreInput').text("Enter your initials:"));
+    scoreDiv.append($("<input>").attr('id', 'scoreInput').attr('class', 'form-control m-3').attr('type', 'text'));
+    scoreDiv.append($("<button>").attr('class', 'btn btn-info btn-smmb-3').attr('id', 'submitScore').text("submit"));
     card.append(scoreDiv);
 
     $("#submitScore").on("click", highScore);

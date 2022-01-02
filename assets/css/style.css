@@ -7,29 +7,27 @@
       text-align: center;
   }
 
-  h3 {
-      text-align: left;
-      margin: 10px;
-  }
-
-  /*div {
-      height: auto;
-      width: auto;
-  }*/
-
-  p {
-      
-      flex-wrap: wrap;
-  }
-
-  button {
+  
+  button  {
       align-self: center;
       border-radius: 30px;
       text-align: left;
-      background-color: #0d5959;
+      background-color: #1A0066;
       color: white;
-      margin: 5px 0 5px 0;
+      margin: 5px;
     
+   }
+
+   .btn-info {
+    background-color: #1A0066;
+   }
+
+   .btn-info:hover {
+    background-color: #D400FF;  
+   }
+
+   button:hover {
+    background-color: #D400FF;  
    }
 
    .btnCol {
@@ -47,6 +45,10 @@
        display: flex;
       
    }
+
+   .score {
+       color:#D400FF;
+   }
    
    #scoreDiv {
        display : flex;
@@ -54,7 +56,7 @@
    }
 
    #scoreInput {
-       width: 40px;
+       
        margin-left: 5px;
        margin-right: 5px;
    }
@@ -74,8 +76,8 @@
 
    ol {
        background-color: #c5a9c8;
-       width : auto;
        align-self: center;
+       
    }
 
    .greeting {
