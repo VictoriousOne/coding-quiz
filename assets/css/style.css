@@ -3,7 +3,7 @@
   }
 
 
-  h2 {
+  h2, h6 {
       text-align: center;
   }
 
@@ -22,11 +22,6 @@
       flex-wrap: wrap;
   }
 
-  #pwd {
-      text-align: center;
-      margin: 5px 0 5px 0;
-  }
-
   button {
       align-self: center;
       border-radius: 30px;
@@ -34,6 +29,7 @@
       background-color: #0d5959;
       color: white;
       margin: 5px 0 5px 0;
+    
    }
 
    .btnCol {
@@ -44,23 +40,14 @@
    }
 
    .normal {
-       width: 30%;
+       width: auto;
    }
 
    .header {
        display: flex;
       
    }
-   p1 {
-       align-self: flex-start;
-   }
-
-   .p2 {
-       color: green;
-       text-decoration-color: indigo;
-       align-self: flex-end;
-   }
-
+   
    #scoreDiv {
        display : flex;
        
@@ -87,5 +74,19 @@
 
    ol {
        background-color: #c5a9c8;
-       width : 80%;
+       width : auto;
+       align-self: center;
    }
+
+   .greeting {
+    
+    border: 1px solid black;
+}
+
+.myHeader {
+    margin: 10px;
+}
+
+#card-header {
+    width: 100%;
+}

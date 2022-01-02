@@ -94,7 +94,7 @@ function highScore() {
     olDiv.append(scoreList);
     scoreDiv.append(olDiv);
 
-    highBtnDiv = $("<div>").attr('class', 'row').attr('id', 'hBtnDiv');
+    highBtnDiv = $("<div>").attr('class', 'row justify-content-center').attr('id', 'hBtnDiv');
     highBtnDiv.append($("<button>").attr('id', 'goBack').attr('class', 'btn btn-info').text("Go Back"));
     highBtnDiv.append($("<button>").attr('id', 'clearScores').attr('class', 'btn btn-info').text("Clear High Scores"));
 
