@@ -1,0 +1,94 @@
+* {
+    box-sizing: border-box;
+  }
+
+
+  h2, h6 {
+      text-align: center;
+  }
+
+  
+  button  {
+      align-self: center;
+      border-radius: 30px;
+      text-align: left;
+      background-color: #1A0066;
+      color: white;
+      margin: 5px;
+    
+   }
+
+   .btn-info {
+    background-color: #1A0066;
+   }
+
+   .btn-info:hover {
+    background-color: #D400FF;  
+   }
+
+   button:hover {
+    background-color: #D400FF;  
+   }
+
+   .btnCol {
+       display : flex;
+       flex-direction: column;
+       margin : 30px 0 30px 0;
+
+   }
+
+   .normal {
+       width: auto;
+   }
+
+   .header {
+       display: flex;
+      
+   }
+
+   .score {
+       color:#D400FF;
+   }
+   
+   #scoreDiv {
+       display : flex;
+       
+   }
+
+   #scoreInput {
+       
+       margin-left: 5px;
+       margin-right: 5px;
+   }
+
+   #scoreLable {
+       margin-left: 5px;
+   }
+
+   #initials {
+       margin-left: 5px;
+   }
+
+   #submitScore {
+       margin-left: 5px;
+       margin-right: 5px;
+   }
+
+   ol {
+       background-color: #c5a9c8;
+       align-self: center;
+       
+   }
+
+   .greeting {
+    
+    border: 1px solid black;
+}
+
+.myHeader {
+    margin: 10px;
+}
+
+#card-header {
+    width: 100%;
+}
