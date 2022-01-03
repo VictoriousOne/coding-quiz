@@ -60,11 +60,15 @@ var quiz = [
 
 function homeJames() {
 
-    /*
-    $("<a>").attr('href', 'index.html').attr('id', '#home');
-    $("#home").click();*/
-
     location.reload();
+    savedScores.length = 0;
+}
+
+function clearScores () {
+    localStorage.removeItem('scores');
+    savedScores.length = 0;
+    
+    $("#olDiv").remove();
 }
 
 function highScore() {
@@ -80,11 +84,15 @@ function highScore() {
     userScore.initials = $("#scoreInput").val();
     userScore.score = score;
     console.log("User Score: " + userScore.initials + "-" + userScore.score);
-    userScores.push(userScore);
+    
 
     savedScores = JSON.parse(localStorage.getItem("scores"));
-    savedScores.push(userScore);
+    if (!savedScores) {
+        savedScores = [];
 
+    }
+    savedScores.push(userScore);
+    savedScores = jQuery.unique(savedScores);
     localStorage.setItem('scores', JSON.stringify(savedScores));
 
     $("#scoreLable").remove();
@@ -92,7 +100,7 @@ function highScore() {
     $("#scoreInput").remove();
     $("#submitScore").remove();
 
-    /*savedScores = JSON.parse(localStorage.getItem("scores"));*/
+    
 
     olDiv = $("<div>").attr('id', 'olDiv').attr('class', 'd-flex flex-column justify-content-center');
 
@@ -109,10 +117,7 @@ function highScore() {
 
     highBtnDiv = $("<div>").attr('class', 'row justify-content-center').attr('id', 'hBtnDiv');
     
-    /*highBtnDiv.append($("<a>").attr('href', './index.html')
-    .attr('class', 'btn btn-info btn-sm')
-    .attr('tabindex', '-1').attr('role', 'button')
-    .attr('aria-disabled', 'true').text("Go Back"));*/
+    
     
     highBtnDiv.append($("<button>").attr('id', 'goBack').attr('class', 'btn btn-info btn-sm').text("Go Back"));
     highBtnDiv.append($("<button>").attr('id', 'clearScores').attr('class', 'btn btn-info btn-sm').text("Clear High Scores"));
@@ -120,7 +125,7 @@ function highScore() {
     scoreDiv.append(highBtnDiv);
 
     $('#goBack').on("click", homeJames);
-    $('clearScores').on("click", clearScores);
+    $('#clearScores').on("click", clearScores);
 }
 
 function displayScore() {
@@ -161,13 +166,30 @@ function loadQuestion(event) {
         if ((event.target.getAttribute("data-answer")) == 1) {
             score++;
             console.log("score is " + score);
+
+            
+            $("#answerDiv").css('visibility', 'visible');
+            $("#answerType").css('visibility', 'visible');
+            $("#answerType").text("Correct !");
         }
         else if ((event.target.getAttribute("data-answer")) == 0) {
             secs = secs - 10;
+            $("#answerDiv").css('visibility', 'visible');
+            $("#answerType").css('visibility', 'visible');
+            $("#answerType").text("Wrong !");
         }
     }
 
-    console.log((event));
+    setTimeout(() => {
+        $("#answerDiv").css('visibility', 'hidden');
+        $("#answerType").css('visibility', 'hidden');
+
+        $("#Answer1").css('visibility', 'visible');
+        $("#Answer2").css('visibility', 'visible');
+        $("#Answer3").css('visibility', 'visible');
+        $("#Answer4").css('visibility', 'visible');
+
+        console.log((event));
     if (ndx <= (quiz.length - 1)) {
         
         question.text(quiz[ndx].question);
@@ -184,6 +206,10 @@ function loadQuestion(event) {
         clearInterval(startTimer);
         displayScore();
     }
+
+      }, 1000);
+
+    
 }
 
 function countDown() {
@@ -191,6 +217,7 @@ function countDown() {
 
     if (secs <= 0) {
         clearInterval(startTimer);
+        displayScore();
     }
     secs--;
 
@@ -203,11 +230,7 @@ function questionPrep() {
     startBtn.unbind("click", questionPrep);
     
     startBtn.remove(); 
-    /*document.querySelector("#pRem").remove();*/
-
-    /* repurpose start button 
-    startBtn.unbind("click", questionPrep);
-    startBtn.attr('id', 'Answer1').attr('outline', 'none');*/
+    
 
     answerBtn1 = tempBtn.clone().attr('id', 'Answer1').html("Answer1");
     answersDiv.append(answerBtn1);
