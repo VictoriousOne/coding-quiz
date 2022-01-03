@@ -92,3 +92,19 @@
 #card-header {
     width: 100%;
 }
+
+#answerDiv {
+    border-top: 3px solid slategrey;
+    margin-top: 10px;
+    visibility:hidden;
+}
+
+#answerType {
+    color: slategrey;
+    margin: 3px 0 3px 0;
+    visibility: hidden;
+}
+
+#Answer1, #Answer2, #Answer3, #Answer4 {
+    visibility: hidden;
+}
